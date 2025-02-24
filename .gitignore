@@ -1,0 +1,6 @@
+# Ignorar dependencias y archivos generados automáticamente
+node_modules/
+.next/
+dist/
+.env
+.DS_Store
