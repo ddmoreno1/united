@@ -7,11 +7,11 @@ export default function PartidosPage() {
 
   return (
     <div className="space-y-4 text-black">
-      <h2 className="text-xl font-semibold">Partidos — {team.name}</h2>
-      <div className="rounded-xl border">
-        <table className="w-full text-sm">
+      <h2 className="text-xl font-semibold text-black">Partidos — {team.name}</h2>
+      <div className="rounded-xl border text-black">
+        <table className="w-full text-sm text-black">
           <thead>
-            <tr className="text-left">
+            <tr className="text-left text-black">
               <th className="p-3">Fecha</th>
               <th className="p-3">Rival</th>
               <th className="p-3">Lugar</th>
@@ -20,7 +20,7 @@ export default function PartidosPage() {
           </thead>
           <tbody>
             {matches.map(m => (
-              <tr key={m.id} className="border-t">
+              <tr key={m.id} className="border-t text-black">
                 <td className="p-3">{new Date(m.date).toLocaleDateString()}</td>
                 <td className="p-3">{m.opponent}</td>
                 <td className="p-3">{m.location ?? '—'}</td>
