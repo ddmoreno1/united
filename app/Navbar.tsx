@@ -11,12 +11,12 @@ export default function Navbar() {
         {/* Logo a la izquierda */}
         <Link href="/" className="flex items-center space-x-2">
           <Image
-            src="/logo_united.png"
-            alt="Logo United Family"
+            src="/logo.jpg" // Asegúrate de tenerlo en la carpeta public
+            alt="Logo San Fernando"
             width={60}
             height={60}
           />
-          <span className="font-bold text-lg">United Family</span>
+          <span className="font-bold text-lg">San Fernando</span>
         </Link>
 
         {/* Menú adaptable en todas las resoluciones */}
