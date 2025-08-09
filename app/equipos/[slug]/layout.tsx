@@ -16,7 +16,7 @@ export default async function TeamLayout({
 
   return (
     <TeamProvider slug={slug}>
-      <div className="mx-auto max-w-5xl p-4">
+      <div className="mx-auto max-w-5xl p-4 text-black">
         <TeamHeader slug={slug} />
         <nav className="mt-4 flex gap-3 border-b pb-2 text-sm">
           <Link href={`/equipos/${slug}`} className="hover:underline">Dashboard</Link>

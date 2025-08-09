@@ -6,7 +6,7 @@ export default function PartidosPage() {
   if (!team) return <div>Equipo no encontrado.</div>
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-black">
       <h2 className="text-xl font-semibold">Partidos — {team.name}</h2>
       <div className="rounded-xl border">
         <table className="w-full text-sm">

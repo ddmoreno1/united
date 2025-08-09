@@ -5,7 +5,7 @@ export default function PlantelPage() {
   const { team, players } = useTeam()
   if (!team) return <div>Equipo no encontrado.</div>
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-black">
       <h2 className="text-xl font-semibold">Plantel — {team.name}</h2>
       <ul className="grid gap-2 md:grid-cols-2">
         {players.map(p => (

@@ -7,12 +7,12 @@ export default function TeamDashboard() {
   const nextMatch = matches.find(m => new Date(m.date) >= new Date())
 
   return (
-    <div className="grid gap-4 md:grid-cols-3">
+    <div className="grid gap-4 md:grid-cols-3 text-black">
       <div className="rounded-2xl border p-4 md:col-span-2">
         <h2 className="mb-2 text-lg font-medium">Próximo partido</h2>
         {nextMatch ? (
-          <div className="text-sm">
-            <div className="text-xl font-semibold">{team.name} vs {nextMatch.opponent}</div>
+          <div className="text-sm text-black">
+            <div className="text-xl font-semibold text-black">{team.name} vs {nextMatch.opponent}</div>
             <div>{new Date(nextMatch.date).toLocaleDateString()}</div>
             {nextMatch.location && <div className="opacity-70">{nextMatch.location}</div>}
           </div>
