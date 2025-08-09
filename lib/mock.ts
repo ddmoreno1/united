@@ -41,7 +41,7 @@ export const PLAYERS: Player[] = [
 ]
 
 export const MATCHES: Match[] = [
-  { id: 'm1', teamId: 't1', opponent: 'Marañon', date: '2025-08-15', goalsFor: 2, goalsAgainst: 1, location: 'Estadio Central' },
+  { id: 'm1', teamId: 't1', opponent: 'San Fernando', date: '2025-08-10', goalsFor: 2, goalsAgainst: 1, location: 'Estadio Central' },
   { id: 'm2', teamId: 't1', opponent: 'Atlético Libertad',  date: '2025-08-22', goalsFor: 0, goalsAgainst: 0, location: 'Estadio Sur' },
   { id: 'm3', teamId: 't2', opponent: 'Racing',  date: '2025-08-15', goalsFor: 1, goalsAgainst: 2, location: 'Estadio Central' },
   { id: 'm4', teamId: 't2', opponent: 'Huracan', date: '2025-08-22', goalsFor: 3, goalsAgainst: 1, location: 'Estadio Norte' },
