@@ -1,14 +1,14 @@
-import { TeamProvider } from '@/lib/team-context'
-import TeamHeader from '@/components/TeamHeader'
-import Link from 'next/link'
+import { ReactNode } from "react"
+import { TeamProvider } from "@/lib/team-context"
+import TeamHeader from "@/components/TeamHeader"
+import Link from "next/link"
 
-export default function TeamLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode
+interface LayoutProps {
+  children: ReactNode
   params: { slug: string }
-}) {
+}
+
+export default function TeamLayout({ children, params }: LayoutProps) {
   return (
     <TeamProvider slug={params.slug}>
       <div className="mx-auto max-w-5xl p-4">
