@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "United Family",
-  description: "Sitio oficial del equipo United Family",
+  title: "San Fernando",
+  description: "Sitio oficial de la Liga Barrial San Fernando",
 };
 
 export default function RootLayout({

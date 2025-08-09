@@ -62,7 +62,7 @@ export default function Home() {
   const table = computeStandings()
 
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-white">
+    <div className="grid grid-rows-[auto_1fr_auto] items-center justify-items-center min-h-screen p-8 gap-8 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-white text-black">
       {/* MAIN */}
       <main className="flex flex-col gap-8 row-start-2 w-full max-w-6xl">
         {/* Hero (tu diseño) */}
