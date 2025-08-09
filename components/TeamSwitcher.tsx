@@ -7,7 +7,7 @@ export default function TeamSwitcher({ currentSlug }: { currentSlug: string }) {
   const pathname = usePathname()
   const tail = pathname?.split('/').slice(3).join('/') || ''
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 text-black">
       <span className="text-sm opacity-70">Equipo:</span>
       <div className="flex flex-wrap gap-2">
         {TEAMS.map(t => (

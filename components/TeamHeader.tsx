@@ -7,7 +7,7 @@ export default function TeamHeader({ slug }: { slug: string }) {
   const { team } = useTeam()
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between text-black">
       <div className="flex items-center gap-3">
         {team?.crestUrl && (
           <Image
