@@ -3,7 +3,7 @@ import { TEAMS } from '@/lib/mock'
 
 export default function EquiposIndex() {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-black">
       <h1 className="text-2xl font-semibold">Elige un equipo</h1>
       <ul className="grid gap-3 md:grid-cols-3">
         {TEAMS.map(t => (
