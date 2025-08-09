@@ -14,7 +14,7 @@ export default function EstadisticasPage() {
   const dg = gf - gc
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-black">
       <h2 className="text-xl font-semibold">Estadísticas — {team.name}</h2>
       <div className="grid gap-3 md:grid-cols-3">
         {[
