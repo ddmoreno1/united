@@ -21,11 +21,12 @@ export default function Navbar() {
 
         {/* Menú adaptable en todas las resoluciones */}
         <div className="hidden md:flex space-x-6 text-[18px]">
-          <NavLink href="/" label="Inicio" />
-          <NavLink href="/jugadores" label="Jugadores" />
-          <NavLink href="/tabla" label="Tabla de Posiciones" />
-          <NavLink href="/partidos" label="Partidos" />
-          <NavLink href="/fundadores" label="Fundadores" />
+
+          <NavLink href="/equipos/united" label="Dashboard"  />
+          <NavLink href="/equipos/united/plantel" label="Plantel"  />
+          <NavLink href="/equipos/united/partidos" label="Partidos"/>
+          <NavLink href="/equipos/united/estadisticas" label="Estadísticas"  />
+          <NavLink href="/equipos" label="Equipos" />
         </div>
 
         {/* Menú hamburguesa en móviles */}
@@ -91,11 +92,13 @@ function MobileMenu() {
           2xl:hidden
           ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
         >
-          <NavLink href="/" label="Inicio" onClick={handleCloseMenu} />
-          <NavLink href="/jugadores" label="Jugadores" onClick={handleCloseMenu} />
-          <NavLink href="/tabla" label="Tabla de Posiciones" onClick={handleCloseMenu} />
-          <NavLink href="/partidos" label="Partidos" onClick={handleCloseMenu} />
-          <NavLink href="/fundadores" label="Fundadores" onClick={handleCloseMenu} />
+          
+          <NavLink href="/equipos/united" label="Dashboard" onClick={handleCloseMenu} />
+          <NavLink href="/equipos/united/plantel" label="Plantel" onClick={handleCloseMenu} />
+          <NavLink href="/equipos/united/partidos" label="Partidos" onClick={handleCloseMenu} />
+          <NavLink href="/equipos/united/estadisticas" label="Estadísticas" onClick={handleCloseMenu} />
+          <NavLink href="/equipos" label="Equipos" onClick={handleCloseMenu} />
+
         </div>
       </>
     );
