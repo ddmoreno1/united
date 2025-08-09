@@ -76,7 +76,7 @@ export default function Home() {
             priority
           />
           <h1 className="text-3xl font-bold text-blue-600">
-            Bienvenidos a la Liga Barrial <span className="uppercase">San Fernando</span>
+            Bienvenidos a la Liga Barrial Douglas <span className="uppercase">San Fernando</span>
           </h1>
           <p className="text-center sm:text-left text-lg">
             Toda la información oficial sobre equipos, jugadores, partidos y más.
