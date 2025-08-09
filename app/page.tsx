@@ -173,7 +173,7 @@ export default function Home() {
       </main>
 
       {/* FOOTER */}
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center text-black">
         <p className="text-sm text-center">
           © {year} San Fernando - Todos los derechos reservados
         </p>
