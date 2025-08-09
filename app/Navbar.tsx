@@ -20,7 +20,7 @@ export default function Navbar() {
         </Link>
 
         {/* Menú adaptable en todas las resoluciones */}
-        <div className="hidden md:flex space-x-6 text-[18px]">
+        <div className="hidden md:flex space-x-6 text-[18px] text-black">
 
           <NavLink href="/equipos/united" label="Dashboard"  />
           <NavLink href="/equipos/united/plantel" label="Plantel"  />
