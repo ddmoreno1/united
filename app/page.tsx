@@ -69,7 +69,7 @@ export default function Home() {
         <section className="flex flex-col items-center sm:items-start gap-6">
           <Image
             className="rounded-full"
-            src="/sanfernando_logo.png"  // asegúrate de tenerlo en /public
+            src="/logo.jpg"  // asegúrate de tenerlo en /public
             alt="San Fernando Logo"
             width={180}
             height={180}
