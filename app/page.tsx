@@ -99,7 +99,7 @@ export default function Home() {
         </section>
 
         {/* Grid con Próximos partidos y Tabla */}
-        <section className="grid gap-6 md:grid-cols-5">
+        <section className="grid gap-6 md:grid-cols-5 text-black">
           {/* Próximos Partidos */}
           <div className="md:col-span-3 rounded-2xl border p-5">
             <h2 className="text-lg font-semibold mb-3">Próximos partidos</h2>
@@ -126,7 +126,7 @@ export default function Home() {
           </div>
 
           {/* Tabla de posiciones */}
-          <div className="md:col-span-2 rounded-2xl border p-5">
+          <div className="md:col-span-2 rounded-2xl border p-5 text-black">
             <h2 className="text-lg font-semibold mb-3">Tabla de posiciones</h2>
             {table.length === 0 ? (
               <div className="text-sm opacity-70">Sin datos</div>
