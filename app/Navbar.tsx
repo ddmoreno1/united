@@ -22,10 +22,10 @@ export default function Navbar() {
         {/* Menú adaptable en todas las resoluciones */}
         <div className="hidden md:flex space-x-6 text-[18px] text-black">
 
-          <NavLink href="/equipos/united" label="Dashboard"  />
-          <NavLink href="/equipos/united/plantel" label="Plantel"  />
-          <NavLink href="/equipos/united/partidos" label="Partidos"/>
-          <NavLink href="/equipos/united/estadisticas" label="Estadísticas"  />
+          <NavLink href="/equipos/" label="Dashboard"  />
+          <NavLink href="/equipos/plantel" label="Plantel"  />
+          <NavLink href="/equipos/partidos" label="Partidos"/>
+          <NavLink href="/equipos/estadisticas" label="Estadísticas"  />
           <NavLink href="/equipos" label="Equipos" />
         </div>
 
