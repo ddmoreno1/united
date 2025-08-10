@@ -90,9 +90,9 @@ export default function Home() {
   const table = computeStandings();
 
   return (
-    <div className="min-h-dvh text-black bg-red-100 sm:px-2 lg:px-8">
+    <div className="min-h-dvh text-black bg-red-100 sm:px-0 lg:px-8">
       {/* Wrapper responsivo */}
-      <div className="container mx-auto p-0 grid grid-rows-[auto_1fr_auto] min-h-dvh bg-green-100">
+      <div className="container mx-auto p-0 grid grid-rows-[auto_1fr_auto] min-h-dvh ">
         {/* MAIN */}
         <main className="row-start-2 py-8 sm:py-12">
           {/* Hero */}
