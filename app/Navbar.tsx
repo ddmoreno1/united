@@ -22,10 +22,10 @@ export default function Navbar() {
         {/* Menú adaptable en todas las resoluciones */}
         <div className="hidden md:flex space-x-6 text-[18px] text-black">
 
-          <NavLink href="/equipos/racing" label="Dashboard"  />
-          <NavLink href="/equipos/racing/plantel" label="Plantel"  />
-          <NavLink href="/equipos/racing/partidos" label="Partidos"/>
-          <NavLink href="/equipos/racing/estadisticas" label="Estadísticas"  />
+          <NavLink href="/equipos/Racing" label="Dashboard"  />
+          <NavLink href="/equipos/Racing/plantel" label="Plantel"  />
+          <NavLink href="/equipos/Racing/partidos" label="Partidos"/>
+          <NavLink href="/equipos/Racing/estadisticas" label="Estadísticas"  />
           <NavLink href="/equipos" label="Equipos" />
         </div>
 
@@ -93,10 +93,10 @@ function MobileMenu() {
           ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
         >
           
-          <NavLink href="/equipos/united" label="Dashboard" onClick={handleCloseMenu} />
-          <NavLink href="/equipos/united/plantel" label="Plantel" onClick={handleCloseMenu} />
-          <NavLink href="/equipos/united/partidos" label="Partidos" onClick={handleCloseMenu} />
-          <NavLink href="/equipos/united/estadisticas" label="Estadísticas" onClick={handleCloseMenu} />
+          <NavLink href="/equipos/Racing" label="Dashboard" onClick={handleCloseMenu} />
+          <NavLink href="/equipos/Racing/plantel" label="Plantel" onClick={handleCloseMenu} />
+          <NavLink href="/equipos/Racing/partidos" label="Partidos" onClick={handleCloseMenu} />
+          <NavLink href="/equipos/Racing/estadisticas" label="Estadísticas" onClick={handleCloseMenu} />
           <NavLink href="/equipos" label="Equipos" onClick={handleCloseMenu} />
 
         </div>
