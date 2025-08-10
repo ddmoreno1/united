@@ -90,7 +90,7 @@ export default function Home() {
   const table = computeStandings();
 
   return (
-    <div className="min-h-dvh text-black bg-red-100 sm:px-0 lg:px-8">
+    <div className="min-h-dvh text-black bg-[#4DE6E2]/10 sm:px-0 lg:px-8">
       {/* Wrapper responsivo */}
       <div className="container mx-auto p-0 grid grid-rows-[auto_1fr_auto] min-h-dvh ">
         {/* MAIN */}
@@ -130,7 +130,7 @@ export default function Home() {
           </section>
 
           {/* Contenido principal */}
-          <section className="mt-10 grid gap-6 md:grid-cols-5">
+          <section className="mt-10 grid gap-6 md:grid-cols-5 px-4">
             {/* Próximos Partidos */}
             <div className="md:col-span-3 rounded-2xl border border-black/10 bg-white p-4 sm:p-5 shadow-sm">
               <h2 className="text-lg font-semibold mb-3">Próximos partidos</h2>
