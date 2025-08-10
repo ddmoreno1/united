@@ -22,10 +22,10 @@ export default function Navbar() {
         {/* Menú adaptable en todas las resoluciones */}
         <div className="hidden md:flex space-x-6 text-[18px] text-black">
 
-          <NavLink href="/equipos/" label="Dashboard"  />
-          <NavLink href="/equipos/plantel" label="Plantel"  />
-          <NavLink href="/equipos/partidos" label="Partidos"/>
-          <NavLink href="/equipos/estadisticas" label="Estadísticas"  />
+          <NavLink href="/equipos/racing" label="Dashboard"  />
+          <NavLink href="/equipos/racing/plantel" label="Plantel"  />
+          <NavLink href="/equipos/racing/partidos" label="Partidos"/>
+          <NavLink href="/equipos/racing/estadisticas" label="Estadísticas"  />
           <NavLink href="/equipos" label="Equipos" />
         </div>
 
