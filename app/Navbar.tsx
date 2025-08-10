@@ -23,7 +23,7 @@ export default function Navbar() {
         <div className="hidden md:flex space-x-6 text-[18px] text-black">
 
           <NavLink href="/" label="Inicio"  />
-          <NavLink href="/equipos/Racing/plantel" label="Plantel"  />
+          <NavLink href="/equipos/Racing/plantel" label="Jugadores"  />
           <NavLink href="/equipos/Racing/partidos" label="Partidos"/>
           <NavLink href="/equipos/Racing/estadisticas" label="Estadísticas"  />
           <NavLink href="/equipos" label="Equipos" />
@@ -94,7 +94,7 @@ function MobileMenu() {
         >
           
           <NavLink href="/" label="Inicio" onClick={handleCloseMenu} />
-          <NavLink href="/equipos/Racing/plantel" label="Plantel" onClick={handleCloseMenu} />
+          <NavLink href="/equipos/Racing/plantel" label="Jugadores" onClick={handleCloseMenu} />
           <NavLink href="/equipos/Racing/partidos" label="Partidos" onClick={handleCloseMenu} />
           <NavLink href="/equipos/Racing/estadisticas" label="Estadísticas" onClick={handleCloseMenu} />
           <NavLink href="/equipos" label="Equipos" onClick={handleCloseMenu} />
