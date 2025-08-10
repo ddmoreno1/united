@@ -22,7 +22,7 @@ export default function Navbar() {
         {/* Menú adaptable en todas las resoluciones */}
         <div className="hidden md:flex space-x-6 text-[18px] text-black">
 
-          <NavLink href="/equipos/Racing" label="Dashboard"  />
+          <NavLink href="/" label="Inicio"  />
           <NavLink href="/equipos/Racing/plantel" label="Plantel"  />
           <NavLink href="/equipos/Racing/partidos" label="Partidos"/>
           <NavLink href="/equipos/Racing/estadisticas" label="Estadísticas"  />
@@ -93,7 +93,7 @@ function MobileMenu() {
           ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
         >
           
-          <NavLink href="/equipos/Racing" label="Dashboard" onClick={handleCloseMenu} />
+          <NavLink href="/" label="Inicio" onClick={handleCloseMenu} />
           <NavLink href="/equipos/Racing/plantel" label="Plantel" onClick={handleCloseMenu} />
           <NavLink href="/equipos/Racing/partidos" label="Partidos" onClick={handleCloseMenu} />
           <NavLink href="/equipos/Racing/estadisticas" label="Estadísticas" onClick={handleCloseMenu} />
