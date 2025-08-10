@@ -19,8 +19,8 @@ export default async function TeamLayout({
       <div className="mx-auto max-w-5xl p-4 text-black">
         <TeamHeader slug={slug} />
         <nav className="mt-4 flex gap-3 border-b pb-2 text-sm">
-          <Link href={`/equipos/${slug}`} className="hover:underline">Dashboard</Link>
-          <Link href={`/equipos/${slug}/plantel`} className="hover:underline">Plantel</Link>
+          <Link href={`/equipos/${slug}`} className="hover:underline">Informacion</Link>
+          <Link href={`/equipos/${slug}/plantel`} className="hover:underline">Jugadores</Link>
           <Link href={`/equipos/${slug}/partidos`} className="hover:underline">Partidos</Link>
           <Link href={`/equipos/${slug}/estadisticas`} className="hover:underline">Estadísticas</Link>
         </nav>
