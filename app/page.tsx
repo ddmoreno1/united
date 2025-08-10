@@ -90,7 +90,7 @@ export default function Home() {
   const table = computeStandings();
 
   return (
-    <div className="min-h-dvh bg-white text-black">
+    <div className="min-h-dvh text-black">
       {/* Wrapper responsivo */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 grid grid-rows-[auto_1fr_auto] min-h-dvh">
         {/* MAIN */}
