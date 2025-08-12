@@ -22,7 +22,7 @@ export default function Standings({ rows, variant = 'full' }: Props) {
 
   // Desktop (tabla completa o compacta)
   return (
-    <div className="rounded-2xl border border-black/10 bg-white shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-black/10 bg-white shadow-sm overflow-hidden text-black">
       <div className="hidden md:block">
         <table className="w-full text-sm">
           <thead className="sticky top-0 bg-gradient-to-b from-gray-50 to-white border-b">
