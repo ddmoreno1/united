@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { TEAMS, MATCHES } from "@/lib/mock";
+import { getUpcomingMatches } from "@/lib/matches";
+import { getStandings } from "@/lib/standings";
 
-// Utilidades
 function formatDate(d: Date) {
   try {
     return new Intl.DateTimeFormat("es-EC", {
@@ -15,83 +15,13 @@ function formatDate(d: Date) {
   }
 }
 
-function computeStandings() {
-  const nameById = new Map(TEAMS.map((t) => [t.id, t.name]));
-  const table = new Map();
-
-  const ensure = (teamId: string) => {
-    if (!table.has(teamId)) {
-      table.set(teamId, {
-        teamId,
-        name: nameById.get(teamId) ?? "Equipo",
-        pj: 0,
-        pg: 0,
-        pe: 0,
-        pp: 0,
-        gf: 0,
-        gc: 0,
-        dg: 0,
-        pts: 0,
-      });
-    }
-    return table.get(teamId);
-  };
-
-  for (const m of MATCHES) {
-    const r = ensure(m.teamId);
-    r.pj += 1;
-    r.gf += m.goalsFor;
-    r.gc += m.goalsAgainst;
-    r.dg = r.gf - r.gc;
-    if (m.goalsFor > m.goalsAgainst) {
-      r.pg += 1;
-      r.pts += 3;
-    } else if (m.goalsFor === m.goalsAgainst) {
-      r.pe += 1;
-      r.pts += 1;
-    } else {
-      r.pp += 1;
-    }
-  }
-
-  return Array.from(table.values()).sort((a, b) => {
-    if (b.pts !== a.pts) return b.pts - a.pts;
-    if (b.dg !== a.dg) return b.dg - a.dg;
-    return b.gf - a.gf;
-  });
-}
-
-function nextFixtures(limit = 5) {
-  const now = new Date();
-  const rows = [];
-
-  for (const m of MATCHES) {
-    const team = TEAMS.find((t) => t.id === m.teamId);
-    if (!team) continue;
-    const d = new Date(m.date);
-    if (d >= now) {
-      rows.push({
-        key: `${team.slug}|${m.opponent}|${m.date}`,
-        date: d,
-        teamName: team.name,
-        opponent: m.opponent,
-        location: m.location,
-        slug: team.slug,
-      });
-    }
-  }
-
-  return rows.sort((a, b) => a.date.getTime() - b.date.getTime()).slice(0, limit);
-}
-
-export default function Home() {
+export default async function Home() {
   const year = new Date().getFullYear();
-  const fixtures = nextFixtures(5);
-  const table = computeStandings();
+  const fixtures = await getUpcomingMatches(5);
+  const table = await getStandings();
 
   return (
     <div className="min-h-dvh text-black bg-[#4DE6E2]/10 sm:px-0 lg:px-8">
-      {/* Wrapper responsivo */}
       <div className="container mx-auto p-0 grid grid-rows-[auto_1fr_auto] min-h-dvh ">
         {/* MAIN */}
         <main className="row-start-2 py-8 sm:py-12">
@@ -122,7 +52,7 @@ export default function Home() {
               </Link>
               <Link
                 className="w-full sm:w-auto rounded-full border border-blue-700 text-blue-700 hover:bg-blue-100 transition-colors inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 text-sm sm:text-base h-11 sm:h-12 px-5"
-                href="/equipos/united/partidos"
+                href="/equipos/racing/partidos"
               >
                 Próximos Partidos
               </Link>
@@ -138,25 +68,30 @@ export default function Home() {
                 <div className="text-sm opacity-70">No hay partidos programados.</div>
               ) : (
                 <ul className="divide-y">
-                  {fixtures.map((f) => (
-                    <li key={f.key} className="py-3 flex items-center justify-between gap-3">
-                      <div className="min-w-0">
-                        <div className="font-medium truncate">
-                          {f.teamName} <span className="opacity-60">vs</span> {f.opponent}
+                  {fixtures.map((f) => {
+                    const dateObj = new Date(f.date);
+                    return (
+                      <li key={f.id} className="py-3 flex items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <div className="font-medium truncate">
+                            {f.team.name} <span className="opacity-60">vs</span> {f.opponent}
+                          </div>
+                          <div className="text-sm opacity-70 truncate">
+                            {f.location ?? "Por definir"}
+                          </div>
                         </div>
-                        <div className="text-sm opacity-70 truncate">{f.location ?? "Por definir"}</div>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <div className="text-sm">{formatDate(f.date)}</div>
-                        <Link
-                          className="text-xs text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 rounded"
-                          href={`/equipos/${f.slug}/partidos`}
-                        >
-                          Ver equipo
-                        </Link>
-                      </div>
-                    </li>
-                  ))}
+                        <div className="text-right shrink-0">
+                          <div className="text-sm">{formatDate(dateObj)}</div>
+                          <Link
+                            className="text-xs text-blue-700 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 rounded"
+                            href={`/equipos/${f.team.slug}/partidos`}
+                          >
+                            Ver equipo
+                          </Link>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>
@@ -165,32 +100,29 @@ export default function Home() {
             <div className="md:col-span-2 rounded-2xl border border-black/10 bg-white p-4 sm:p-5 shadow-sm">
               <h2 className="text-lg font-semibold mb-3">Tabla de posiciones</h2>
 
-              {/* Vista tipo tarjetas en móvil */}
+              {/* Móvil */}
               <div className="space-y-2 md:hidden" aria-label="Tabla de posiciones (móvil)">
                 {table.length === 0 ? (
                   <div className="text-sm opacity-70">Sin datos</div>
                 ) : (
-                  table.map((r, i) => {
-                    const team = TEAMS.find((t) => t.id === r.teamId);
-                    return (
-                      <div key={r.teamId} className="flex items-center justify-between rounded-xl border p-3">
-                        <div className="min-w-0">
-                          <div className="text-xs opacity-70">#{i + 1}</div>
-                          <Link className="font-medium hover:underline truncate" href={`/equipos/${team?.slug ?? ""}`}>
-                            {r.name}
-                          </Link>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-sm font-semibold">{r.pts} pts</div>
-                          <div className="text-xs opacity-70">PJ {r.pj} · DG {r.dg}</div>
-                        </div>
+                  table.map((r, i) => (
+                    <div key={r.teamId} className="flex items-center justify-between rounded-xl border p-3">
+                      <div className="min-w-0">
+                        <div className="text-xs opacity-70">#{i + 1}</div>
+                        <Link className="font-medium hover:underline truncate" href={`/equipos/${r.slug}`}>
+                          {r.name}
+                        </Link>
                       </div>
-                    );
-                  })
+                      <div className="text-right">
+                        <div className="text-sm font-semibold">{r.pts} pts</div>
+                        <div className="text-xs opacity-70">PJ {r.pj} · DG {r.dg}</div>
+                      </div>
+                    </div>
+                  ))
                 )}
               </div>
 
-              {/* Tabla en pantallas medianas y grandes */}
+              {/* Desktop */}
               <div className="hidden md:block overflow-x-auto">
                 {table.length === 0 ? (
                   <div className="text-sm opacity-70">Sin datos</div>
@@ -206,30 +138,27 @@ export default function Home() {
                       </tr>
                     </thead>
                     <tbody>
-                      {table.map((r, i) => {
-                        const team = TEAMS.find((t) => t.id === r.teamId);
-                        return (
-                          <tr key={r.teamId} className="border-t">
-                            <td className="p-2">{i + 1}</td>
-                            <td className="p-2">
-                              <Link className="hover:underline" href={`/equipos/${team?.slug ?? ""}`}>
-                                {r.name}
-                              </Link>
-                            </td>
-                            <td className="p-2">{r.pj}</td>
-                            <td className="p-2 font-semibold">{r.pts}</td>
-                            <td className="p-2">{r.dg}</td>
-                          </tr>
-                        );
-                      })}
+                      {table.map((r, i) => (
+                        <tr key={r.teamId} className="border-t">
+                          <td className="p-2">{i + 1}</td>
+                          <td className="p-2">
+                            <Link className="hover:underline" href={`/equipos/${r.slug}`}>
+                              {r.name}
+                            </Link>
+                          </td>
+                          <td className="p-2">{r.pj}</td>
+                          <td className="p-2 font-semibold">{r.pts}</td>
+                          <td className="p-2">{r.dg}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 )}
               </div>
 
               <div className="mt-3 text-right">
-                <Link className="text-xs text-blue-700 hover:underline" href="/equipos">
-                  Ver todos los equipos
+                <Link className="text-xs text-blue-700 hover:underline" href="/tabla">
+                  Ver tabla completa
                 </Link>
               </div>
             </div>
