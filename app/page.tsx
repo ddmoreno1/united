@@ -19,6 +19,7 @@ export default async function Home() {
   const year = new Date().getFullYear();
   const fixtures = await getUpcomingMatches(5);
   const table = await getStandings();
+  const top4 = table.slice(0, 4); // 👈 solo los primeros 4
 
   return (
     <div className="min-h-dvh text-black bg-[#4DE6E2]/10 sm:px-0 lg:px-8">
@@ -98,14 +99,14 @@ export default async function Home() {
 
             {/* Tabla de posiciones */}
             <div className="md:col-span-2 rounded-2xl border border-black/10 bg-white p-4 sm:p-5 shadow-sm">
-              <h2 className="text-lg font-semibold mb-3">Tabla de posiciones</h2>
+              <h2 className="text-lg font-semibold mb-3">Top 4 · Tabla de posiciones</h2>
 
               {/* Móvil */}
               <div className="space-y-2 md:hidden" aria-label="Tabla de posiciones (móvil)">
-                {table.length === 0 ? (
+                {top4.length === 0 ? (
                   <div className="text-sm opacity-70">Sin datos</div>
                 ) : (
-                  table.map((r, i) => (
+                  top4.map((r, i) => (
                     <div key={r.teamId} className="flex items-center justify-between rounded-xl border p-3">
                       <div className="min-w-0">
                         <div className="text-xs opacity-70">#{i + 1}</div>
@@ -124,7 +125,7 @@ export default async function Home() {
 
               {/* Desktop */}
               <div className="hidden md:block overflow-x-auto">
-                {table.length === 0 ? (
+                {top4.length === 0 ? (
                   <div className="text-sm opacity-70">Sin datos</div>
                 ) : (
                   <table className="w-full text-sm">
@@ -138,7 +139,7 @@ export default async function Home() {
                       </tr>
                     </thead>
                     <tbody>
-                      {table.map((r, i) => (
+                      {top4.map((r, i) => (
                         <tr key={r.teamId} className="border-t">
                           <td className="p-2">{i + 1}</td>
                           <td className="p-2">
