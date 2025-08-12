@@ -39,9 +39,16 @@ export default function Standings({ rows, variant = 'full' }: Props) {
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={r.teamId} className="border-t hover:bg-sky-50/50 transition-colors">
+              <tr
+                key={r.teamId}
+                className={`border-t transition-colors ${
+                  i >= rows.length - 2
+                    ? 'bg-red-50 hover:bg-red-100/60' // últimas 2 en rojo suave
+                    : 'hover:bg-sky-50/50'
+                }`}
+              >
                 <Td>
-                  <RankBadge rank={i + 1} />
+                  <RankBadge rank={i + 1} total={rows.length} />
                 </Td>
                 <Td>
                   <Link href={`/equipos/${r.slug}`} className="flex items-center gap-2 group">
@@ -70,10 +77,17 @@ export default function Standings({ rows, variant = 'full' }: Props) {
       {/* Móvil (cards) */}
       <div className="md:hidden divide-y">
         {rows.map((r, i) => (
-          <div key={r.teamId} className="p-3 bg-white">
+          <div
+            key={r.teamId}
+            className={`p-3 transition-colors border ${
+              i >= rows.length - 2
+                ? 'bg-red-50 border-red-100' // últimas 2 en rojo suave
+                : 'bg-white border-gray-200'
+            }`}
+          >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 min-w-0">
-                <RankBadge rank={i + 1} />
+                <RankBadge rank={i + 1} total={rows.length} />
                 <Image
                   src={r.crestUrl ?? '/placeholder-crest.svg'}
                   alt={r.name}
@@ -115,13 +129,15 @@ function Td({ children, className }: { children: React.ReactNode; className?: st
   return <td className={`p-2 align-middle ${className ?? ''}`}>{children}</td>
 }
 
-function RankBadge({ rank }: { rank: number }) {
-  // Estilos: 1–4 azul, 5–8 gris, resto neutro (ajusta a tu gusto)
-  const base = 'inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold'
-  const cls =
-    rank <= 4 ? 'bg-blue-600 text-white' :
-    rank <= 8 ? 'bg-gray-200 text-gray-800' :
-    'bg-gray-100 text-gray-700'
+function RankBadge({ rank, total }: { rank: number; total: number }) {
+  const base =
+    'inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-semibold'
+
+  let cls = 'bg-gray-100 text-gray-700'
+  if (rank <= 4) cls = 'bg-blue-600 text-white'
+  else if (rank <= 8) cls = 'bg-gray-200 text-gray-800'
+  else if (rank > total - 2) cls = 'bg-red-200 text-red-800' // últimos 2
+
   return <span className={`${base} ${cls}`}>{rank}</span>
 }
 
