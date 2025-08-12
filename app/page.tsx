@@ -53,7 +53,7 @@ export default async function Home() {
               </Link>
               <Link
                 className="w-full sm:w-auto rounded-full border border-blue-700 text-blue-700 hover:bg-blue-100 transition-colors inline-flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 text-sm sm:text-base h-11 sm:h-12 px-5"
-                href="/equipos/racing/partidos"
+                href="/partidos"
               >
                 Próximos Partidos
               </Link>
