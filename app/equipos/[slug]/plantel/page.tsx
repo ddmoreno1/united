@@ -1,16 +1,35 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useTeam } from '@/lib/team-context'
+import { createClient, PostgrestSingleResponse } from '@supabase/supabase-js'
 
 type SortKey = 'number' | 'name'
 
+interface Player {
+  id: string
+  name: string
+  number: number | null
+  position?: string | null
+  team_id?: string | null
+}
+
+interface MatchEvent {
+  player_id: string | null
+  event_type: 'goal' | 'own_goal' | 'yellow_card' | 'red_card'
+  team_id: string
+}
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
+)
+
 export default function PlantelPage() {
-  // 1) Siempre llama hooks al tope
   const ctx = useTeam() as {
-    team: { name: string; crestUrl?: string | null } | null
-    players: { id: string; name: string; number: number | null; position?: string | null }[]
+    team: { id?: string; name: string; crestUrl?: string | null } | null
+    players: Player[]
     loading?: boolean
   }
 
@@ -20,9 +39,40 @@ export default function PlantelPage() {
 
   const [q, setQ] = useState('')
   const [sortBy, setSortBy] = useState<SortKey>('number')
-  const [posFilter, setPosFilter] = useState<string>('') // "" = todas
+  const [posFilter, setPosFilter] = useState<string>('') 
+  const [stats, setStats] = useState<Record<string, { goals: number; yellow: number; red: number }>>({})
 
-  // 2) Derivados con useMemo (siempre después de hooks, antes del render)
+  useEffect(() => {
+    async function fetchStats() {
+      if (!players.length) return
+
+      const { data, error }: PostgrestSingleResponse<MatchEvent[]> = await supabase
+        .from('match_events')
+        .select('player_id, event_type, team_id')
+
+      if (error || !data) return
+
+      const totals: Record<string, { goals: number; yellow: number; red: number }> = {}
+
+      for (const ev of data) {
+        if (!ev.player_id) continue
+        if (!totals[ev.player_id]) totals[ev.player_id] = { goals: 0, yellow: 0, red: 0 }
+
+        if (ev.event_type === 'goal') totals[ev.player_id].goals++
+        if (ev.event_type === 'own_goal') {
+          const playerTeam = players.find(p => p.id === ev.player_id)?.team_id
+          if (playerTeam && playerTeam !== ev.team_id) {
+            totals[ev.player_id].goals++
+          }
+        }
+        if (ev.event_type === 'yellow_card') totals[ev.player_id].yellow++
+        if (ev.event_type === 'red_card') totals[ev.player_id].red++
+      }
+      setStats(totals)
+    }
+    fetchStats()
+  }, [players])
+
   const positions = useMemo(() => {
     const set = new Set<string>()
     for (const p of players) {
@@ -60,14 +110,12 @@ export default function PlantelPage() {
     return list
   }, [players, q, posFilter, sortBy])
 
-  // 3) Ahora sí: renders (puedes retornar temprano aquí)
   if (!team) {
     return <div className="rounded-xl border p-4 text-sm text-black bg-white">Equipo no encontrado.</div>
   }
 
   return (
     <div className="text-black">
-      {/* Header */}
       <header className="mb-6 sm:mb-8 flex flex-col gap-4">
         <div className="flex items-center gap-3">
           <Image
@@ -77,15 +125,13 @@ export default function PlantelPage() {
             height={48}
             className="h-12 w-12 rounded-lg bg-white ring-1 ring-black/5 object-contain"
           />
-        <div>
+          <div>
             <h1 className="text-2xl sm:text-3xl font-bold leading-tight">Plantel — {team.name}</h1>
             <p className="text-sm opacity-70">{players.length} jugador{players.length === 1 ? '' : 'es'}</p>
           </div>
         </div>
 
-        {/* Controles */}
         <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-          {/* Búsqueda */}
           <div className="flex items-center gap-2">
             <div className="relative">
               <input
@@ -108,7 +154,6 @@ export default function PlantelPage() {
             )}
           </div>
 
-          {/* Sort + Filtros */}
           <div className="flex flex-wrap items-center gap-2">
             <select
               value={sortBy}
@@ -135,7 +180,6 @@ export default function PlantelPage() {
         </div>
       </header>
 
-      {/* Grid */}
       <ul className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {loading
           ? Array.from({ length: 6 }).map((_, i) => (
@@ -163,7 +207,12 @@ export default function PlantelPage() {
                   <div className="flex items-center gap-4">
                     <NumberBadge number={p.number} />
                     <div className="min-w-0">
-                      <div className="font-semibold truncate">{p.name}</div>
+                      <div className="font-semibold truncate flex items-center gap-2">
+                        {p.name}
+                        <span className="text-xs text-gray-500">
+                          ⚽ {stats[p.id]?.goals ?? 0} | 🟨 {stats[p.id]?.yellow ?? 0} | 🟥 {stats[p.id]?.red ?? 0}
+                        </span>
+                      </div>
                       <div className="text-xs opacity-70">
                         {p.position ? <PositionPill label={p.position} /> : <span className="opacity-60">Sin posición</span>}
                       </div>
@@ -176,8 +225,6 @@ export default function PlantelPage() {
     </div>
   )
 }
-
-/* ---------- subcomponentes UI ---------- */
 
 function NumberBadge({ number }: { number: number | null }) {
   const display = number ?? '—'
