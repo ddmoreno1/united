@@ -25,6 +25,7 @@ export default function GoleadoresPage() {
         .from('top_scorers')
         .select('*')
         .order('goals', { ascending: false })
+        .limit(6)
 
       if (!error && data) {
         setGoleadores(data as TopScorer[])
