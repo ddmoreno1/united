@@ -34,7 +34,7 @@ export default function GoleadoresPage() {
   }, [])
 
   return (
-    <div className="p-4">
+    <div className="p-4 text-black">
       <h1 className="text-2xl font-bold mb-4">Tabla de Goleadores</h1>
       <table className="w-full border border-gray-300">
         <thead className="bg-gray-200">
