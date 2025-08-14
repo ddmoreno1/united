@@ -15,10 +15,11 @@ interface Player {
   team_id?: string | null
 }
 
-interface MatchEvent {
-  player_id: string | null
-  event_type: 'goal' | 'own_goal' | 'yellow_card' | 'red_card'
-  team_id: string
+interface PlayerStatsRow {
+  player_id: string
+  goals: number | null
+  yellow: number | null
+  red: number | null
 }
 
 const supabase = createClient(
@@ -46,29 +47,21 @@ export default function PlantelPage() {
     async function fetchStats() {
       if (!players.length) return
 
-      const { data, error }: PostgrestSingleResponse<MatchEvent[]> = await supabase
-        .from('match_events')
-        .select('player_id, event_type, team_id')
+      const { data, error }: PostgrestSingleResponse<PlayerStatsRow[]> = await supabase
+        .from('player_stats')
+        .select('player_id, goals, yellow, red')
 
       if (error || !data) return
 
-      const totals: Record<string, { goals: number; yellow: number; red: number }> = {}
-
-      for (const ev of data) {
-        if (!ev.player_id) continue
-        if (!totals[ev.player_id]) totals[ev.player_id] = { goals: 0, yellow: 0, red: 0 }
-
-        if (ev.event_type === 'goal') totals[ev.player_id].goals++
-        if (ev.event_type === 'own_goal') {
-          const playerTeam = players.find(p => p.id === ev.player_id)?.team_id
-          if (playerTeam && playerTeam !== ev.team_id) {
-            totals[ev.player_id].goals++
-          }
+      const dict: Record<string, { goals: number; yellow: number; red: number }> = {}
+      for (const row of data) {
+        dict[row.player_id] = {
+          goals: Number(row.goals ?? 0),
+          yellow: Number(row.yellow ?? 0),
+          red: Number(row.red ?? 0),
         }
-        if (ev.event_type === 'yellow_card') totals[ev.player_id].yellow++
-        if (ev.event_type === 'red_card') totals[ev.player_id].red++
       }
-      setStats(totals)
+      setStats(dict)
     }
     fetchStats()
   }, [players])
