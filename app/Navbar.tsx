@@ -26,6 +26,7 @@ export default function Navbar() {
           <NavLink href="/partidos" label="Partidos" />
           <NavLink href="/tabla" label="Tabla de Posiciones" />
           <NavLink href="/equipos" label="Equipos" />
+          <NavLink href="/goleadores" label="Goleadores" />
         </div>
 
         {/* Menú hamburguesa en móviles */}
@@ -87,6 +88,7 @@ function MobileMenu() {
         <NavLink href="/partidos" label="Partidos" onClick={handleCloseMenu} />
         <NavLink href="/tabla" label="Tabla de Posiciones" onClick={handleCloseMenu} />
         <NavLink href="/equipos" label="Equipos" onClick={handleCloseMenu} />
+        <NavLink href="/goleadores" label="Goleadores" onClick={handleCloseMenu} />
       </div>
     </>
   );
