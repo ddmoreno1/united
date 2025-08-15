@@ -200,14 +200,21 @@ export default function PlantelPage() {
                   <div className="flex items-center gap-4">
                     <NumberBadge number={p.number} />
                     <div className="min-w-0">
-                      <div className="font-semibold truncate flex items-center gap-2">
+                      {/* Línea 1: SOLO el nombre (sin stats para no cortar) */}
+                      <div className="font-semibold truncate">
                         {p.name}
-                        <span className="text-xs text-gray-500">
-                          ⚽ {stats[p.id]?.goals ?? 0} | 🟨 {stats[p.id]?.yellow ?? 0} | 🟥 {stats[p.id]?.red ?? 0}
-                        </span>
                       </div>
-                      <div className="text-xs opacity-70">
-                        {p.position ? <PositionPill label={p.position} /> : <span className="opacity-60">Sin posición</span>}
+
+                      {/* Línea 2: posición + stats en píldoras, con wrap si no entra */}
+                      <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs opacity-90">
+                        {p.position ? (
+                          <PositionPill label={p.position} />
+                        ) : (
+                          <span className="opacity-60">Sin posición</span>
+                        )}
+                        <GoalsPill value={stats[p.id]?.goals ?? 0} />
+                        <YellowPill value={stats[p.id]?.yellow ?? 0} />
+                        <RedPill value={stats[p.id]?.red ?? 0} />
                       </div>
                     </div>
                   </div>
@@ -237,6 +244,40 @@ function PositionPill({ label }: { label: string }) {
   return (
     <span className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[11px] text-blue-700">
       {label}
+    </span>
+  )
+}
+
+/* -------- Píldoras compactas para stats -------- */
+function GoalsPill({ value }: { value: number }) {
+  return (
+    <span
+      className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-2 py-0.5 text-[11px] text-blue-700"
+      title={`${value} goles`}
+    >
+      ⚽ {value}
+    </span>
+  )
+}
+
+function YellowPill({ value }: { value: number }) {
+  return (
+    <span
+      className="inline-flex items-center rounded-full border border-yellow-200 bg-yellow-50 px-2 py-0.5 text-[11px] text-yellow-700"
+      title={`${value} amarillas`}
+    >
+      🟨 {value}
+    </span>
+  )
+}
+
+function RedPill({ value }: { value: number }) {
+  return (
+    <span
+      className="inline-flex items-center rounded-full border border-red-200 bg-red-50 px-2 py-0.5 text-[11px] text-red-700"
+      title={`${value} rojas`}
+    >
+      🟥 {value}
     </span>
   )
 }
