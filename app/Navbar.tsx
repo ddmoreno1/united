@@ -78,7 +78,7 @@ function MobileMenu() {
       </button>
 
       <div
-        className={`absolute top-16 right-0 w-1/2 bg-gradient-to-b from-white to-sky-300 shadow-2xl p-6 flex flex-col space-y-4 text-[18px] h-auto rounded-l-2xl transform transition-all duration-300 ease-in-out overflow-hidden
+  className={`absolute top-16 right-0 w-1/2 bg-gradient-to-b from-white to-[#77ACA2] shadow-2xl p-6 flex flex-col space-y-4 text-[18px] h-auto rounded-l-2xl transform transition-all duration-300 ease-in-out overflow-hidden
           sm:w-1/2 sm:rounded-r-2xl
           md:hidden lg:hidden xl:hidden 2xl:hidden
           ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
